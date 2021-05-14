@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity() {
+class NoteActivity : AppCompatActivity() {
     private var notePosition = POSITION_NOT_SET
     private val tag = this::class.simpleName
 
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         if (notePosition >= DataManager.notes.lastIndex){
             val menuItem = menu?.findItem(R.id.action_next)?.apply {
-                icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_block_white_24)
+                icon = ContextCompat.getDrawable(this@NoteActivity, R.drawable.ic_block_white_24)
                 isEnabled = false
             }
         }
