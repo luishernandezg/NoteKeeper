@@ -29,7 +29,7 @@ class ItemsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         NoteRecyclerAdapter(this)
     }
     private val coursesLayoutManager by lazy {
-        GridLayoutManager(this,2)
+        GridLayoutManager(this,resources.getInteger(R.integer.course_grid_span))
     }
 
     private val coursesRecyclerAdapter by lazy {
@@ -108,10 +108,18 @@ class ItemsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 displayCourses()
             }
             R.id.nav_share -> {
-                handleSelection("Don't you think you've shared enough")
+                handleSelection(R.string.nav_share_message)
             }
             R.id.nav_send -> {
-                handleSelection("Send")
+                handleSelection(R.string.nav_send_message)
+            }
+            R.id.nav_how_many -> {
+                val message = getString(
+                        R.string.nav_how_many_message_format,
+                        DataManager.notes.size,
+                        DataManager.courses.values.size
+                )
+                Snackbar.make(listItems,message, Snackbar.LENGTH_LONG).show()
             }
         }
 
@@ -119,8 +127,8 @@ class ItemsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return true
     }
 
-    private fun handleSelection(message: String) {
-        Snackbar.make(listItems, message, Snackbar.LENGTH_LONG).show()
+    private fun handleSelection(stringId: Int) {
+        Snackbar.make(listItems, stringId, Snackbar.LENGTH_LONG).show()
     }
 /*override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)

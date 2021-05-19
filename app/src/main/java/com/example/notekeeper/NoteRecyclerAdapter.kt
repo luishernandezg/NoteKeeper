@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notekeeper.DataManager.notes
+import kotlinx.android.synthetic.main.item_note_list.view.*
 
 class NoteRecyclerAdapter(private val context: Context) :
         RecyclerView.Adapter<NoteRecyclerAdapter.ViewHolder>() {
@@ -23,14 +24,17 @@ class NoteRecyclerAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val note = notes[position]
-        holder.textCourse?.text = note.course?.title
+        /*holder.textCourse?.text
         holder.textTitle?.text = note.title
+        holder.notePosition = position*/
+        holder.itemView.textTitle?.text = note.course?.title
+        holder.itemView.textCourse?.text = note.title
         holder.notePosition = position
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textCourse = itemView.findViewById<TextView?>(R.id.textCourse)
-        val textTitle = itemView.findViewById<TextView?>(R.id.textTitle)
+        /*val textCourse = itemView.findViewById<TextView?>(R.id.textCourse)
+        val textTitle = itemView.findViewById<TextView?>(R.id.textTitle)*/
         var notePosition = 0
         init {
             itemView.setOnClickListener {
