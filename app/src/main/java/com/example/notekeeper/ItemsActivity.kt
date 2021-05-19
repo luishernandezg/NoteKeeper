@@ -90,6 +90,7 @@ class ItemsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
