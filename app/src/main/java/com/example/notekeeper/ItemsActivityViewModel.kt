@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class ItemsActivityViewModel: ViewModel()  {
     var navDrawerDisplaySelection = R.id.nav_notes
+    val NAV_DRAWER_SELECTION_NAME_KEY = "NAV_DRAWER_SELECTION_NAME_KEY"
 
     private val maxRecentlyViewedNotes = 5
     val recentlyViewedNotes = ArrayList<NoteInfo>(maxRecentlyViewedNotes)

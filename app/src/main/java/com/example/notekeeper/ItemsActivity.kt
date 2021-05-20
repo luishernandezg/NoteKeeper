@@ -23,7 +23,6 @@ class ItemsActivity : AppCompatActivity(),
     NoteRecyclerAdapter.OnNoteSelectedListener {
 
 
-
     private val noteLayoutManager by lazy {
         LinearLayoutManager(this)
     }
@@ -67,6 +66,8 @@ class ItemsActivity : AppCompatActivity(),
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
 
+        if (savedInstanceState != null)
+            viewModel.navDrawerDisplaySelection = savedInstanceState.getInt(viewModel.NAV_DRAWER_SELECTION_NAME_KEY)
         handleDisplaySelection(viewModel.navDrawerDisplaySelection)
 
         /*val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -75,6 +76,11 @@ class ItemsActivity : AppCompatActivity(),
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)*/
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(viewModel.NAV_DRAWER_SELECTION_NAME_KEY,viewModel.navDrawerDisplaySelection)
     }
 
     private fun displayNotes() {
