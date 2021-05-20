@@ -22,7 +22,7 @@ class NoteListActivity : AppCompatActivity() {
 
         listItems.layoutManager = LinearLayoutManager(this)
 
-        listItems.adapter = NoteRecyclerAdapter(this)
+        listItems.adapter = NoteRecyclerAdapter(this, DataManager.loadNotes())
 
     }
 

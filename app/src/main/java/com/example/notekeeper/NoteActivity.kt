@@ -39,8 +39,7 @@ class NoteActivity : AppCompatActivity() {
     }
 
     private fun createNewNote() {
-        DataManager.notes.add(NoteInfo())
-        notePosition = DataManager.notes.lastIndex
+        notePosition = DataManager.addNote(NoteInfo())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -49,20 +48,13 @@ class NoteActivity : AppCompatActivity() {
     }
 
     private fun displayNote() {
-
-        if(notePosition > DataManager.notes.lastIndex){
-            Log.e(tag,"Invalid note position $notePosition, max valid position ${DataManager.notes.lastIndex}")
-            return
-        }
-
         Log.i(tag, "Displaying note for position $notePosition")
-        val note = DataManager.notes[notePosition]
-        textNoteTitle.setText( note.title)
+        val note = DataManager.loadNote(notePosition)
+        textNoteTitle.setText(note.title)
         textNoteText.setText(note.text)
 
         val coursePosition = DataManager.courses.values.indexOf(note.course)
         spinnerCourses.setSelection(coursePosition)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -93,12 +85,20 @@ class NoteActivity : AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
-        if (notePosition >= DataManager.notes.lastIndex){
-            val menuItem = menu?.findItem(R.id.action_next)?.apply {
-                icon = ContextCompat.getDrawable(this@NoteActivity, R.drawable.ic_block_white_24)
-                isEnabled = false
+
+        if(DataManager.isLastNoteId(notePosition)) {
+            val menuItem = menu?.findItem(R.id.action_next)
+            if(menuItem != null) {
+                menuItem.icon = ContextCompat.getDrawable(this@NoteActivity, R.drawable.ic_block_white_24)
+                menuItem.isEnabled = false
             }
         }
+        /*if (notePosition >= DataManager.notes.lastIndex){
+            val menuItem = menu?.findItem(R.id.action_next)?.apply {
+                icon = ContextCompat.getDrawable(this@NoteActivity, R.drawable.ic_block_white_24)
+
+            }
+        }*/
 
         return super.onPrepareOptionsMenu(menu)
     }
@@ -110,10 +110,10 @@ class NoteActivity : AppCompatActivity() {
     }
 
     private fun saveNote() {
-            val note = DataManager.notes[notePosition]
-                note.title = textNoteTitle.text.toString()
-                note.text = textNoteText.text.toString()
-                note.course = spinnerCourses.selectedItem as CourseInfo
+        val note = DataManager.loadNote(notePosition)
+        note.title = textNoteTitle.text.toString()
+        note.text = textNoteText.text.toString()
+        note.course = spinnerCourses.selectedItem as CourseInfo
 
     }
 }
