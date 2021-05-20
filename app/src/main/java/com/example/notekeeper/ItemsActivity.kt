@@ -66,8 +66,9 @@ class ItemsActivity : AppCompatActivity(),
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
 
-        if (savedInstanceState != null)
-            viewModel.navDrawerDisplaySelection = savedInstanceState.getInt(viewModel.NAV_DRAWER_SELECTION_NAME_KEY)
+        if (viewModel.isNewlyCreated && savedInstanceState != null)
+            viewModel.restoreState(savedInstanceState)
+        viewModel.isNewlyCreated = false
         handleDisplaySelection(viewModel.navDrawerDisplaySelection)
 
         /*val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -80,7 +81,7 @@ class ItemsActivity : AppCompatActivity(),
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(viewModel.NAV_DRAWER_SELECTION_NAME_KEY,viewModel.navDrawerDisplaySelection)
+        viewModel.saveState(outState)
     }
 
     private fun displayNotes() {

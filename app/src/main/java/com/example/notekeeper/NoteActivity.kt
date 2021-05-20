@@ -13,6 +13,8 @@ class NoteActivity : AppCompatActivity() {
     private var notePosition = POSITION_NOT_SET
     private val tag = this::class.simpleName
 
+    val noteGetTogetherHelper = NoteGetTogetherHelper(this, lifecycle)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
